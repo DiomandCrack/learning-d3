@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src='../d3/d3.min.js'></script>
+    <script>
+        d3.select("body")
+            //d3 对象 可以访问d3的方法
+            //select() 获取元素对象 如果获取多个 可以用 selectAll()
+            .append("p")
+            //生成新的DOM元素 并插入到获取的元素对象上
+            .text("hello world with D3!!!");
+        //text()方法接受字符串 类似与innerHTML?(如果之前的元素有内容 将会被替换)
+        //等价于
+        // const body = d3.select("body");
+        // const p = body.append("p");
+        // p.text("New paragraph")
+    </script>
+</body>
+
+</html>

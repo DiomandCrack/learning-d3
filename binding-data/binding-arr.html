@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../d3/d3.min.js"></script>
+    <script>
+        const dataset = [5, 10, 25, 20, 15];
+
+        d3.select("body").selectAll("p")
+            //selectAll 一开始是空对象 代表即将生成的元素对象的集合
+            .data(dataset)
+            //解析传入数据的value并 一共执行了length次数
+            .enter()
+            //为了创建被数据绑定的元素对象
+            //??? 
+            /*If there are more data values than corresponding DOM elements, then enter() creates a new
+            placeholder element on which you can work your magic. It then hands off a refer‐
+            ence to this new placeholder to the next step in the chain.*/
+            //如果传入的数据多余与之匹配的元素对象 enter()会创建一个新的占位元素 但是不会去操作这个占位元素 进入链式的下一步
+            .append("p")
+            //占位元素被生成元素对象
+            .text((d) => `here is number ${d}`);
+        //填充文本内容 传入d 操作数组的每个数字
+    </script>
+</body>
+
+</html>
