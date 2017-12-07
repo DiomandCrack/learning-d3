@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src='../d3/d3.js'></script>
+    <script>
+        const dataset = [10, 5, 15, 20, 25];
+
+        let w = 500;
+        let h = 500;
+        const svg = d3.select('body')
+            .append('svg')
+            .attr('width', w)
+            .attr('height', h);
+
+        const circles = svg.selectAll('circle')
+            .data(dataset)
+            .enter()
+            .append('circle');
+
+        circles.attr('cx', (d, i) => i * 50 + 25) // i 索引值 成倍数
+            .attr('cy', h / 2)
+            .attr('r', (d) => d)
+            .attr('fill', 'cyan')
+            .attr('stroke', 'orange')
+            .attr('stroke-width', (d) => d / 2)
+    </script>
+</body>
+
+</html>

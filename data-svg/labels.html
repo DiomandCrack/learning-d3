@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src='../d3/d3.js'></script>
+    <script>
+        const w = 1500;
+        const h = 900;
+        const barPadding = 10;
+        const dataset = [5, 10, 13, 19, 21, 25, 22, 18, 15, 13, 11, 12, 15, 20, 28, 27, 16, 18, 23, 25, 20, 10, 13, 17];
+
+        const sw = w / dataset.length
+        const svg = d3.select('body')
+            .append('svg')
+            .attr('width', w)
+            .attr('height', h)
+
+        const rects = svg.selectAll('rect')
+            .data(dataset)
+            .enter()
+            .append('rect')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', sw - barPadding) //间距1px 平均分配宽度
+            .attr('height', 100)
+            .attr('x', (d, i) => (sw) * i)
+            .attr('height', (d) => d * 20) //svg坐标点在左上角 
+            .attr('y', (d) => h - d * 20) //svg坐标点切换到左下角 (这可比canvas简单多了)
+            // .attr('fill', 'teal')
+            .attr('fill', (d) => `rgb(255,100,${Math.round(d*5)})`)
+
+        const text = svg.selectAll('text')
+            .data(dataset)
+            .enter()
+            .append('text')
+            .text((d) => d)
+            .attr('y', (d) => h - d * 20 + 30)
+            .attr('font-family', 'sans-serif')
+            .attr('font-size', '16px')
+            .attr('fill', 'white')
+            .attr('text-anchor', 'middle')
+            .attr('x', (d, i) => i * (sw) + (sw - barPadding) / 2);
+    </script>
+</body>
+
+</html>
