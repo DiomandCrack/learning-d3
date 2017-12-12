@@ -15,6 +15,6 @@ start to learn d3
 
 ## 刻度
 
-刻度是 输入映射 输出范围的 函数
+刻度是 映射 输入域 输出范围的 函数
 “Scales are functions that map from an input domain to an output range.”
 
