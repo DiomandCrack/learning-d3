@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../d3/d3.js"></script>
+    <script>
+        let parseTime = d3.timeParse('%m/%d/%y');
+        //日期函数
+        // parseTime('02/20/17')
+        // parseTime('02/20/69')  2069年
+        // parseTime('02/20/68')  2068年
+        const padding = 20; //防止散点溢出
+        const w = 600;
+        const h = 300;
+        const svg = d3.select('body')
+            .append('svg')
+            .attr('width', w)
+            .attr('height', h)
+
+        const rowConverter = (d) => ({
+            Date: parseTime(d.Date),
+            Amount: parseInt(d.Amount)
+        })
+
+        let dataset;
+        d3.csv("date.csv", rowConverter, function(data) {
+            console.log(data)
+            dataset = data;
+            //csv 异步方法 等待文件下载完成后才执行
+            //csv 的每行都不能有空格!!!
+            //rowConvrter 是个规则 如何处理每列
+            const xScale = d3.scaleTime()
+                .domain([
+                    d3.min(dataset, (d) => d.Date),
+                    d3.max(dataset, (d) => d.Date)
+                ])
+                .range([padding, w - padding]);
+
+            const yScale = d3.scaleLinear()
+                .domain(
+                    [
+                        d3.min(dataset, (d) => d.Amount),
+                        d3.max(dataset, (d) => d.Amount)
+                    ]
+                ).range([h - padding, padding]);
+
+            const rScale = d3.scaleLinear()
+                .domain(
+                    [
+                        d3.min(dataset, (d) => d.Amount),
+                        d3.max(dataset, (d) => d.Amount)
+                    ]
+                ).range([4, 10])
+            const circles = svg.selectAll('circle')
+                .data(dataset)
+                .enter()
+                .append('circle')
+                .attr('cx', (d) => xScale(d.Date))
+                .attr('cy', (d) => yScale(d.Amount))
+                .attr('r', (d) => rScale(d.Amount))
+                .attr('fill', 'blue');
+
+            const text = svg.selectAll('text')
+                .data(dataset)
+                .enter()
+                .append('text')
+                .text((d) => `${d.Date}`)
+                .attr('x', (d) => xScale(d.Date))
+                .attr('y', (d) => yScale(d.Amount))
+                .attr('font-size', '10px')
+                .attr('fill', 'red')
+        });
+    </script>
+</body>
+
+</html>
